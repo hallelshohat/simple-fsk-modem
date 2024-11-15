@@ -1,12 +1,8 @@
-import multiprocessing
 from audio_transmitter.audio.audio_queue import AudioQueue
 from audio_transmitter.receive_packet import recv_packet
 from audio_transmitter.send_packet import send_packet
-import time
 
 if __name__ == "__main__":
-    multiprocessing.freeze_support()
-
     with AudioQueue() as audio_queue:
         print("Real-time audio stream started. Press Ctrl+C to stop.")
         data = b""
@@ -17,9 +13,9 @@ if __name__ == "__main__":
             packet = recv_packet(audio_queue.queue)
             if packet:
                 print(f"Got packet {packet[0]} successfully")
-                time.sleep(1)
-                send_packet(packet[0].to_bytes(), audio_queue)
-                
+                # time.sleep(1)
+                send_packet(packet[0].to_bytes())
+
                 if last_ack + 1 == packet[0]:
                     last_ack += 1
                     if total_length == -1:  # first packet indicates number of packets

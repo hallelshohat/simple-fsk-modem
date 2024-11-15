@@ -5,14 +5,13 @@ from audio_transmitter.fsk.demodulator.preamble_finder import PreambleFinder
 
 
 class FskDemodulator:
-    signal_buffer = []
-    data_buffer = np.array([])
-    symbols_buffer = []
-    chunks_per_symbol = 5
-    preamble_found = False
-
     def __init__(self):
         self.preamble_finder = PreambleFinder()
+        self.signal_buffer = []
+        self.data_buffer = np.array([])
+        self.symbols_buffer = []
+        self.chunks_per_symbol = 5
+        self.preamble_found = False
 
     def demodulate_signal(self, data: np.ndarray, samplerate: int):
         chunks = self.get_voice_chunks(data, samplerate)
