@@ -5,9 +5,11 @@ from time import time
 
 
 # Receive one packet via audio queue with timeout.
-def recv_packet(audio_queue: list, timeout=None):
+def recv_packet(audio_queue: list, timeout=None, clean_queue=True):
     demod = FskDemodulator()
-    audio_queue.clear()
+    if clean_queue:
+        audio_queue.clear()
+
     packet_data = b""  # data of the packet that is received
     packet_length = 0  # packet length, first byte of the packet.
     start_time = time()

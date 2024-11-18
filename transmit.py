@@ -6,14 +6,9 @@ import sys
 
 
 # Main program for transmitter
-if __name__ == "__main__":
+def main(file: bytes):
     with AudioQueue() as audio_queue:
-        bits = b"Hello World!"  # default value, if file is not given
-        if sys.argv[1]:
-            with open(sys.argv[1], "rb") as f:
-                bits = f.read()
-
-        packets = split_data(bits)  # split to packets
+        packets = split_data(file)  # split to packets
 
         # First packet is packet_id=0 and the number of packets that is transmitted
         total_packets_message = b"\x00" + len(packets).to_bytes()
@@ -32,3 +27,12 @@ if __name__ == "__main__":
                 print(f"Resending packet {packet[0]}")
 
         print("Sent all packets successfully!")
+
+
+if __name__ == "__main__":
+    bits = b"Hello World!"  # default value, if file is not given
+    if sys.argv[1]:
+        with open(sys.argv[1], "rb") as f:
+            bits = f.read()
+
+    main(bits)

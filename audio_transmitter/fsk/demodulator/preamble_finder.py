@@ -13,12 +13,13 @@ class PreambleFinder:
             [[fsk_tones[c]] * chunks_per_symbol for c in to_symbols(preamble)]
         ).flatten()
 
+
         index = 0
         preamble_index = -1
         max_similarity = 0
 
         # sweep the array finding the maximum similarity.
-        while index + len(preamble_tones) < len(signal_buffer):
+        while index + len(preamble_tones) <= len(signal_buffer):
             arr = signal_buffer[index : index + len(preamble_tones)]
             similarity = self.calculate_similarity(arr, preamble_tones)
             if similarity > max_similarity:
